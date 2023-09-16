@@ -13,9 +13,9 @@ type Weather struct {
 		Description string `json:"description"`
 	} `json:"weather"`
 	Main struct {
-		Temp     int `json:"temp"`
-		Pressure int `json:"pressure"`
-		Humidity int `json:"humidity"`
+		Temp     float64 `json:"temp"`
+		Pressure int     `json:"pressure"`
+		Humidity int     `json:"humidity"`
 	} `json:"main"`
 	Sys struct {
 		Country string `json:"country"`
@@ -42,5 +42,5 @@ func main() {
 	if err != nil {
 		panic("Could not unmarshal data")
 	}
-	fmt.Println(string(body))
+	fmt.Println(weather)
 }
