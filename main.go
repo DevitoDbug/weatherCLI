@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 )
 
 type Weather struct {
@@ -14,7 +15,6 @@ type Weather struct {
 	} `json:"weather"`
 	Main struct {
 		Temp     float64 `json:"temp"`
-		Pressure int     `json:"pressure"`
 		Humidity int     `json:"humidity"`
 	} `json:"main"`
 	Sys struct {
@@ -23,7 +23,13 @@ type Weather struct {
 }
 
 func main() {
-	res, err := http.Get("https://api.openweathermap.org/data/2.5/weather?q=Nairobi&appid=73cbc8ffd789d41ed5535c3fdb8ca562")
+	city := "Nairobi"
+
+	if len(os.Args) >= 2 {
+		city = os.Args[1]
+	}
+
+	res, err := http.Get("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=73cbc8ffd789d41ed5535c3fdb8ca562")
 	if err != nil {
 		panic(err)
 	}
@@ -42,5 +48,7 @@ func main() {
 	if err != nil {
 		panic("Could not unmarshal data")
 	}
-	fmt.Println(weather)
+
+	country, name, description, temp, humidity := weather.Sys.Country, weather.Name, weather.Weather[0].Description, weather.Main.Temp, weather.Main.Humidity
+	fmt.Printf("Country: %v\nCity: %v\nWeather:%v, Temp:%.0f , Humidity:%v\n", country, name, description, temp, humidity)
 }
