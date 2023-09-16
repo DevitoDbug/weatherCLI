@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -34,6 +35,12 @@ func main() {
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
 		panic("Could not read body of response")
+	}
+
+	var weather Weather
+	err = json.Unmarshal(body, &weather)
+	if err != nil {
+		panic("Could not unmarshal data")
 	}
 	fmt.Println(string(body))
 }
