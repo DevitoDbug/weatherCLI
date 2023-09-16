@@ -7,7 +7,6 @@ import (
 )
 
 func main() {
-	//https://api.openweathermap.org/data/2.5/weather?q=Nairobi&appid=73cbc8ffd789d41ed5535c3fdb8ca562
 	res, err := http.Get("https://api.openweathermap.org/data/2.5/weather?q=Nairobi&appid=73cbc8ffd789d41ed5535c3fdb8ca562")
 	if err != nil {
 		panic(err)
@@ -21,5 +20,5 @@ func main() {
 	if err != nil {
 		panic("Could not read body of response")
 	}
-	fmt.Println(body)
+	fmt.Println(string(body))
 }
